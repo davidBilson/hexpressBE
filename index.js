@@ -3,7 +3,8 @@ const cors = require('cors');
 const app = express()
 const cookieSession = require('cookie-session')
 const passport = require('passport')
-
+require("dotenv").config();
+const passportSetup = require('./passport.js')
 
 // initialize cookieSession
 app.use(cookieSession(
