@@ -11,7 +11,7 @@ const app = express();
 // Configure express-session
 app.use(
   session({
-    secret: 'your-secret-key', // Change this to a strong, random secret
+    secret: 'hexpress', // Change this to a strong, random secret
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -24,11 +24,22 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// CORS configuration
+const allowedOrigins = [
+  "https://hexpress.vercel.app",
+  "http://localhost:5173",
+  "http://localhost:5000/auth",
+]
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
-    methods: ["GET", "PUT", "PATCH", "POST", "DELETE"],
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS policy switch it up'));
+      }
+    },
+    methods: ["GET", "PUT", "PATCH", "POST", "DELETE", "HEAD"],
     credentials: true,
   })
 );

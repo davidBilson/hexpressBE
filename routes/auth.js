@@ -4,32 +4,65 @@ const passport = require("passport");
 const CLIENT_URL = "http://localhost:5173/";
 
 router.get("/login/failed", (req, res) => {
-    console.log("login failed")
-    res.status(401).json({
-        success: false,
-        message: "Login failed"
-    });
-});
-
-router.get("/login/success", (req, res) => {
-    console.log("login successful")
-    if (req.user) {
-        res.status(200).json({
-            success: true,
-            message: "Login successful",
-            user: req.user
-        });
-    } else {
+    console.log("login failed");
+    try {
         res.status(401).json({
             success: false,
             message: "Login failed"
         });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: "An error occurred"
+        });
+    }
+});
+
+router.get("/login/success", (req, res) => {
+    if (req.user) {
+        console.log("login successful");
+        try {
+            res.status(200).json({
+                success: true,
+                message: "Login successful",
+                user: req.user
+            });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({
+                success: false,
+                message: "An error occurred"
+            });
+        }
+    } else {
+        console.log("login failed");
+        try {
+            res.status(401).json({
+                success: false,
+                message: "Login failed"
+            });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({
+                success: false,
+                message: "An error occurred"
+            });
+        }
     }
 });
 
 router.get("/logout", (req, res) => {
-    req.logout();
-    res.redirect(CLIENT_URL);
+    try {
+        res.redirect(CLIENT_URL);
+        req.logout();
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: "An error occurred"
+        });
+    }
 });
 
 router.get("/google", passport.authenticate("google", { scope: ["profile"] }));

@@ -10,9 +10,9 @@ passport.use(new GoogleStrategy({
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: "/auth/google/callback"
 },
-function(accessToken, refreshToken, profile, done) {
-    done(null, profile);
-  }
+    function(accessToken, refreshToken, profile, done) {
+        done(null, profile);
+    }
 ));
 
 passport.serializeUser((user, done) => {
