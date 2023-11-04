@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require('express-session'); // Import express-session
 const passport = require('passport');
@@ -7,6 +8,7 @@ const passportSetup = require('./passport.js');
 const authRoute = require('./routes/auth.js');
 
 const app = express();
+const PORT = process.env.PORT;
 
 // Configure express-session
 app.use(
@@ -46,6 +48,19 @@ app.use(
 
 app.use("/auth", authRoute);
 
-app.listen("5000", () => {
-  console.log("Server is running on port 5000");
-});
+// Define a function to connect to the database
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.DB_STRING); // Use process.env.DB_STRING
+    console.log('Connected to MongoDB');
+    // Start the server after the database connection is established
+    app.listen(PORT, () => {
+      console.log(`Server is listening on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error('Error connecting to MongoDB:', err);
+  }
+};
+
+// Call the connectDB function to initiate the database connection
+connectDB();
