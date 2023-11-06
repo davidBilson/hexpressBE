@@ -1,17 +1,18 @@
+const express = require('express');
+const app = express();
+
+// External Dependencies
+const cors = require('cors');
+const mongoose = require('mongoose');
+const session = require('express-session');
+const passport = require('passport');
+
+require('dotenv').config()
 // Internal Modules
 const authRoute = require('./routes/auth.js');
 const passportSetup = require('./passport.js');
 
-// External Dependencies
-const cors = require('cors');
-const express = require('express');
-const mongoose = require('mongoose');
-const passport = require('passport');
-const session = require('express-session');
 
-
-
-const app = express();
 const PORT = process.env.PORT;
 
 // Configure express-session
