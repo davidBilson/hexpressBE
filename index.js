@@ -34,8 +34,6 @@ app.use(passport.session());
 
 const allowedOrigins = [
   "https://hexpress.vercel.app",
-  "http://localhost:5173",
-  "http://localhost:5000/auth",
 ]
 
 app.use(
