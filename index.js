@@ -16,6 +16,9 @@ const passportSetup = require('./passport.js');
 
 const PORT = process.env.PORT;
 
+
+const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+
 // Configure express-session
 app.use(
   session({
@@ -23,14 +26,14 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 24 * 60 * 60 * 1000, // Session duration in milliseconds (24 hours)
+       expires: expiryDate,
     },
   })
 );
 
-// Initializing Passport
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.initialize()); // init passport on every route call.
+app.use(passport.authenticate("session"));
+app.use(passport.session()); // allow passport to use "express-session".
 
 const allowedOrigins = [
   "https://hexpress.vercel.app",
