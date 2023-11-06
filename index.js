@@ -57,7 +57,8 @@ app.use("/auth", authRoute);
 // Define a function to connect to the database
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.DB_STRING); // Use process.env.DB_STRING
+    mongoose.set('strictQuery', false); // Add this line
+    await mongoose.connect(process.env.DB_STRING);
     console.log('Connected to MongoDB');
     // Start the server after the database connection is established
     app.listen(PORT, () => {
@@ -67,6 +68,7 @@ const connectDB = async () => {
     console.error('Error connecting to MongoDB:', err);
   }
 };
+
 
 // Call the connectDB function to initiate the database connection
 connectDB();
