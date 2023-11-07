@@ -72,7 +72,11 @@ router.get("/google/callback", async (req, res) => {
   const user = req.user;
 
   // Redirect the user back to the frontend application with the user's profile information.
-  res.redirect(`${CLIENT_URL}/auth/success?user=${user}`);
+  res.status(200).json({
+    success: true,
+    message: "Login successful",
+    user: user,
+  });
 });
 
 module.exports = router;
