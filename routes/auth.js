@@ -68,15 +68,34 @@ router.get("/logout", (req, res) => {
 router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
 
 // **// Redirect the user back to the frontend application with the user's profile information.**
-router.get("/google/callback", async (req, res) => {
-  const user = req.user;
+// router.get("/google/callback", async (req, res) => {
+//   const user = req.user;
 
-  // Redirect the user back to the frontend application with the user's profile information.
-  res.status(200).json({
-    success: true,
-    message: "Login successful",
-    user: user,
+//   // Redirect the user back to the frontend application with the user's profile information.
+//   res.redirect('')
+//   res.status(200).json({
+//     success: true,
+//     message: "Login successful",
+//     user: user,
+//   });
+// });
+
+router.get("/google/callback", passport.authenticate((req, res) => {
+  passport.authenticate("google", {
+    failureRedirect: CLIENT_URL,
+    successMessage: true,
+    failureMessage: true,
+  })(req, res, () => {
+    console.log(req);
+    res.redirect(CLIENT_URL);
+    res.status(200).json({
+        success: true,
+        message: "Login successful",
+        user: user,
   });
-});
+  });
+}));
+
+
 
 module.exports = router;
