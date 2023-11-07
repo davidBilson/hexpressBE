@@ -22,6 +22,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
        expires: expiryDate,
+       secure: true
     },
   })
 );
