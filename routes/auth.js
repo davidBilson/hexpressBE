@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const passport = require("passport");
-
 const CLIENT_URL = "https://hexpress.vercel.app/";
 
 router.get("/login/failed", (req, res) => {

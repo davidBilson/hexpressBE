@@ -1,13 +1,10 @@
 require('dotenv').config()
-
 const express = require('express');
 const cors = require('cors');
-
 // External Dependencies
 const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
-
 const app = express();
 
 // Internal Modules
@@ -15,8 +12,6 @@ const authRoute = require('./routes/auth.js');
 const passportSetup = require('./passport.js');
 
 const PORT = process.env.PORT;
-
-
 const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
 
 // Configure express-session
@@ -35,9 +30,7 @@ app.use(passport.initialize()); // init passport on every route call.
 app.use(passport.authenticate("session"));
 app.use(passport.session()); // allow passport to use "express-session".
 
-const allowedOrigins = [
-  "https://hexpress.vercel.app",
-]
+const allowedOrigins = ["https://hexpress.vercel.app"];
 
 app.use(
   cors({
@@ -69,7 +62,6 @@ const connectDB = async () => {
     console.error('Error connecting to MongoDB:', err);
   }
 };
-
 
 // Call the connectDB function to initiate the database connection
 connectDB();
