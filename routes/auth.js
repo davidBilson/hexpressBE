@@ -24,6 +24,7 @@ router.get("/login/success", (req, res) => {
     if (req.user) {
         console.log("login successful");
         try {
+            res.redirect(CLIENT_URL);
             res.status(200).json({
                 success: true,
                 message: "Login successful",
