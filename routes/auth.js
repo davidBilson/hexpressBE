@@ -24,12 +24,11 @@ router.get("/login/success", (req, res) => {
     if (req.user) {
         console.log("login successful");
         try {
-            res.redirect(CLIENT_URL);
             res.status(200).json({
                 success: true,
                 message: "Login successful",
                 user: req.user
-            })
+            });
         } catch (err) {
             console.error(err);
             res.status(500).json({
@@ -70,7 +69,7 @@ router.get("/logout", (req, res) => {
 router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
 
 router.get("/google/callback", passport.authenticate("google", {
-    successRedirect: "/login/success",
+    successRedirect: CLIENT_URL,
     failureRedirect: "/login/failed"
 }));
 
