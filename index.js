@@ -23,19 +23,6 @@ app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 100,
 }))
 
-// Configure express-session
-// app.use(
-//   session({
-//     secret: 'hexpress', // Change this to a strong, random secret
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: {
-//        expires: expiryDate,
-//        secure: true
-//     },
-//   })
-// );
-
 app.use(passport.initialize()); // init passport on every route call.
 app.use(passport.authenticate("session"));
 app.use(passport.session()); // allow passport to use "express-session".
