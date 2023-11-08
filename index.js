@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 // External Dependencies
 const mongoose = require('mongoose');
+const cookieSession = require("cookie-session")
+
 const session = require('express-session');
 const passport = require('passport');
 const app = express();
@@ -14,18 +16,25 @@ const passportSetup = require('./passport.js');
 const PORT = process.env.PORT;
 const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
 
+// configure cookie session
+app.use(cookieSession({
+  name: "session",
+  keys: ["hexpress"],
+  maxAge: 24 * 60 * 60 * 100,
+}))
+
 // Configure express-session
-app.use(
-  session({
-    secret: 'hexpress', // Change this to a strong, random secret
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-       expires: expiryDate,
-       secure: true
-    },
-  })
-);
+// app.use(
+//   session({
+//     secret: 'hexpress', // Change this to a strong, random secret
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//        expires: expiryDate,
+//        secure: true
+//     },
+//   })
+// );
 
 app.use(passport.initialize()); // init passport on every route call.
 app.use(passport.authenticate("session"));

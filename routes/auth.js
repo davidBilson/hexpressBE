@@ -4,10 +4,10 @@ const passport = require("passport");
 const CLIENT_URL = "https://hexpress.vercel.app/";
 
 router.get("/login/failed", (req, res) => {
-    console.log("login failed");
+    
     try {
-        res.redirect(CLIENT_URL);
         res.status(401).json({
+            error: true,
             success: false,
             message: "Login failed"
         });
@@ -22,8 +22,8 @@ router.get("/login/failed", (req, res) => {
 
 router.get("/login/success", (req, res) => {
     if (req.user) {
-        console.log("login successful");
         try {
+            console.log("login successful");
             res.status(200).json({
                 success: true,
                 message: "Login successful",
@@ -37,11 +37,12 @@ router.get("/login/success", (req, res) => {
             });
         }
     } else {
-        console.log("login failed");
         try {
-            res.status(401).json({
+            console.log("login failed");
+            res.status(403).json({
+                error: true,
                 success: false,
-                message: "Login failed"
+                message: "Not authorized"
             });
         } catch (err) {
             console.error(err);
@@ -61,16 +62,18 @@ router.get("/logout", (req, res) => {
         console.error(err);
         res.status(500).json({
             success: false,
-            message: "An error occurred"
+            message: "Error loggin out",
+            error: true
         });
     }
 });
 
-router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
 
 router.get("/google/callback", passport.authenticate("google", {
     successRedirect: CLIENT_URL,
     failureRedirect: "/login/failed"
 }));
+
+router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 module.exports = router;
