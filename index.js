@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 require('dotenv').config({ path: './config/.env' });
 
 // Internal modules
-const authRoute = require('./routes/auth.js');
+const authRouter = require('./routes/auth.js');
 const passportSetup = require('./config/passport.js');
 
 const PORT = process.env.PORT || 5000;
@@ -49,7 +49,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Use google authentication
-app.use("/auth", authRoute);
+app.use("/auth", authRouter);
 
 app.use(passport.initialize());
 app.use(passport.session());
