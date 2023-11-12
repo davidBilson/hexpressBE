@@ -2,25 +2,39 @@ const mongoose = require('mongoose')
 
 // Define a schema for the "User" collection
 const UserSchema = new mongoose.Schema({
-    name: {
+    userName: {
         type: String,
+    },
+    googleId: {
+      type: String,
+      required: false,
+      unique: true,
+      sparse: true,
     },
     location: {
         type: String,
     },
-    phone: {
+    phoneNumber: {
         type: Number,
     },
-    profilePicture: {
+    avatar: {
         type: String,
     },
     email: {
         type: String,
         required: true,
         unique: true,
+        minlength: 5,
+        maxlength: 255,
     },
     password: {
         type: String,
+        required: false,
+    },
+    role: {
+        type: String,
+        default: "user",
+        required: true,
     },
     savedProducts: {
         type: mongoose.Schema.Types.ObjectId,
