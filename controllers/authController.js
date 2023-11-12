@@ -2,7 +2,6 @@ const passport  = require('passport');
 
 const clientHost = "https://hexpress.vercel.app"
 
-
 const googleLogin = (req, res, next) => {
     passport.authenticate("google", { scope: ["profile", "email"] })(
         req,
@@ -21,3 +20,8 @@ const googleCallback = (req, res) => {
         res.redirect(clientHost)
     })
 }
+
+module.exports = {
+    googleLogin,
+    googleCallback,
+};
