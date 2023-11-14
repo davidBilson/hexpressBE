@@ -14,7 +14,7 @@ const passportSetup = require('./config/passport.js');
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-const allowedOrigins = ["https://hexpress.vercel.app"];
+const allowedOrigins = ["http://localhost:5173"];
 
 app.use(
   cors({
@@ -37,7 +37,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: true,
+    secure: false,
     expires: expiryDate,
   },
   store: MongoStore.create({
@@ -52,6 +52,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/auth", authRouter);
 
 app.use(passport.initialize());
+app.use(passport.authenticate('session'));
 app.use(passport.session());
 
 // Define a function to connect to the database
