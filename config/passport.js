@@ -1,7 +1,7 @@
 require('dotenv').config({ path: './.env' })
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const User = require('../models/userModel')
+const UserSchema = require('../models/userModel')
 
 passport.use(new GoogleStrategy(
     {
@@ -13,11 +13,11 @@ passport.use(new GoogleStrategy(
     // find user by google id or create user
     async (request, accessToken, refreshToken, profile, done) => {
         try {
-            const user = await User.findOne({ googleId: profile.id })
+            const user = await UserSchema.findOne({ googleId: profile.id })
             if (user) {
                 return done(null, user);
             }
-            const newUser = await User.create({
+            const newUser = await UserSchema.create({
                 googleId: profile.id,
                 email: profile.emails[0].value, // Extract email from google profile
                 password: null, // No password is required for OAuth2
@@ -38,7 +38,7 @@ passport.serializeUser((user, cb) => {
 // return user info as you want via deserialization to req.user
 passport.deserializeUser(async (_id, cb) => {
     try {
-        const user = await User.findById(_id);
+        const user = await UserSchema.findById(_id);
         cb(null, user);
     } catch (err) {
         cb(err);

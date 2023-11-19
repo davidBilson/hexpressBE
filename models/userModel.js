@@ -2,8 +2,22 @@ const mongoose = require('mongoose')
 
 // Define a schema for the "User" collection
 const UserSchema = new mongoose.Schema({
-    userName: {
+    firstName: {
         type: String,
+    },
+    lastName: {
+        type: String,
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        minlength: 5,
+        maxlength: 255,
+    },
+    password: {
+        type: String,
+        required: false,
     },
     googleId: {
       type: String,
@@ -19,17 +33,6 @@ const UserSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        minlength: 5,
-        maxlength: 255,
-    },
-    password: {
-        type: String,
-        required: false,
     },
     role: {
         type: String,

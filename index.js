@@ -9,6 +9,7 @@ require('dotenv').config({ path: './config/.env' });
 
 // Internal modules
 const authRouter = require('./routes/auth.js');
+const userRouter = require('./routes/user.js');
 const passportSetup = require('./config/passport.js');
 
 const PORT = process.env.PORT || 5000;
@@ -48,8 +49,11 @@ app.use(session({
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Use google authentication
+// Google authentication routes
 app.use("/auth", authRouter);
+// Local authentication routes
+app.use("user", userRouter);
+
 
 app.use(passport.initialize());
 app.use(passport.authenticate('session'));
