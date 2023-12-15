@@ -52,7 +52,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Google authentication routes
 app.use("/auth", authRouter);
 // Local authentication routes
-app.use("user", userRouter);
+app.use("/user", userRouter);
 
 
 app.use(passport.initialize());
