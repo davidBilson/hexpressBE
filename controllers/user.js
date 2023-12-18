@@ -23,14 +23,13 @@ module.exports = {
                 email,
                 password: hashPassword
             })
-
-
+            
         } catch (error) {
             console.log(error)
             return res.status(500).json({
-                message: "Internal server error",
-                error: error,
-                success: false
+                message: 'Internal Server Error',
+                error: err,
+                success: false,
             }); // send an error response if user creation failed
         }
     },
@@ -45,18 +44,23 @@ module.exports = {
             if (user) {
                 // Compare the provided password with the hashed password in the database
                 const isPasswordValid = await bcrypt.compare(password, user.password);
+                
                 if (isPasswordValid) {
                     res.status(200).json({
                         success: true,
                         message: "Login successful",
-                        userName: user.name,
-                        id: user._id
-                    })
+                        userEmail: user.email,
+                        userFirstName: user.firstName,
+                        userLastName: user.lastName,
+                        id: user._id,
+                        
+                        error: null
+                    });
                 } else {
-                    res.json({
+                    res.status(401).json({
                         success: false,
                         message: 'Incorrect username or password'
-                    }); // Send a response indicating incorrect username or password
+                    });
                 }
             } else {
                 // Send a response indicating that the user does not exist
