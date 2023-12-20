@@ -17,8 +17,6 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "http://localhost:5173/sign-in",
-  "http://localhost:5173/sign-up"
 ];
 
 app.use(

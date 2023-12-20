@@ -1,3 +1,4 @@
+const { response } = require('express');
 const UserSchema = require('../models/userModel.js'); // import the user schema
 const bcrypt = require('bcrypt'); // import bcrypt for hashing passwords
 
@@ -16,7 +17,6 @@ module.exports = {
             }
 
             const hashPassword = await bcrypt.hash(password, 10); // hash the user's password with the salt
-
             const newUser = await UserSchema.create({
                 firstName,
                 lastName,
@@ -53,7 +53,6 @@ module.exports = {
                         userFirstName: user.firstName,
                         userLastName: user.lastName,
                         id: user._id,
-                        
                         error: null
                     });
                 } else {
@@ -78,6 +77,26 @@ module.exports = {
                 error: err,
                 success: false,
             });
+        }
+    },
+    getUserData : async (req, res) => {
+        const userId = req.params.id; //extract the userId
+        try {
+
+            const user = await UserSchema.findOne({ _id : userId })
+
+            if (user) {
+
+                res.status(200).json(user)
+
+            } else {
+                res.json({
+                    message: "User not found, proceed to signup",
+                    success: false
+                })
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
 }

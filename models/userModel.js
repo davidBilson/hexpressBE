@@ -39,10 +39,10 @@ const UserSchema = new mongoose.Schema({
         default: "user",
         required: true,
     },
-    savedProducts: {
+    savedOrders: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product",
-    }
+    },
 })
 
 // Export the model based on the defined schema
