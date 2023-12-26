@@ -17,6 +17,7 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
+  "https://hexpress.vercel.app"
 ];
 
 app.use(
