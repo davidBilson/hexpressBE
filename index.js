@@ -6,15 +6,13 @@ const passport = require('passport');
 const MongoStore = require('connect-mongo');
 const bodyParser = require('body-parser');
 require('dotenv').config({ path: './config/.env' });
-
 // Internal modules
 const authRouter = require('./routes/auth.js');
 const userRouter = require('./routes/user.js');
 const passportSetup = require('./config/passport.js');
-
 const PORT = process.env.PORT || 5000;
-const app = express();
 
+const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "https://hexpress.vercel.app"
@@ -51,13 +49,10 @@ app.use(session({
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
 // Google authentication routes
 app.use("/auth", authRouter);
 // Local authentication routes
 app.use("/user", userRouter);
-
-
 app.use(passport.initialize());
 app.use(passport.authenticate('session'));
 app.use(passport.session());
@@ -79,6 +74,5 @@ const connectDB = async () => {
     process.exit(1); // Exit the process if database connection fails
   }
 };
-
 // Call the connectDB function to initiate the database connection
 connectDB();
