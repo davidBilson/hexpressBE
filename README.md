@@ -25,7 +25,7 @@ HexpressBE is built using Node.js and Express.js framework, with MongoDB as the 
 - **express-session**: Session middleware for Express.js.
 - **dotenv**: Loads environment variables from a .env file.
 
-  [Check Code Base for the Frontend Application Built With ReactJs](https://github.com/davidBilson/hexpressBE/edit/main/README.md)
+  [Check Code Base for the Frontend Application Built With ReactJs](https://github.com/davidBilson/hexpressFE)
 
 ## Getting Started
 
