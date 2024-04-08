@@ -1,4 +1,4 @@
-const { response } = require('express');
+// const { response } = require('express');
 const UserSchema = require('../models/userModel.js'); // import the user schema
 const bcrypt = require('bcrypt'); // import bcrypt for hashing passwords
 
