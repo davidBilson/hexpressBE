@@ -6,7 +6,6 @@ module.exports = {
     signup : async (req, res) => {
         try {
             const { firstName, lastName, email, password} = req.body; //destructure incoming data from the request body
-            
             const existingUser = await UserSchema.findOne({ email }) // check if a user with same email already exists in DB
             
             if (existingUser) {
@@ -21,7 +20,7 @@ module.exports = {
                 firstName,
                 lastName,
                 email,
-                password: hashPassword
+                password: hashPassword6
             })
             
         } catch (error) {
@@ -39,11 +38,11 @@ module.exports = {
             const { email, password} = req.body;
 
             // find user with the given email
-            const user = await UserSchema.findOne({ email: email });
+            const user = await UserSchema.findOne({ email });
 
             if (user) {
                 // Compare the provided password with the hashed password in the database
-                const isPasswordValid = await bcrypt.compare(password, user.password);
+                const isPasswordValid = bcrypt.compare(password, user.password);
                 
                 if (isPasswordValid) {
                     res.status(200).json({
